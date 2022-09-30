@@ -6,7 +6,7 @@ num_sample <- n_sample # number of total sample
 ob_samples <- rep(0, num_sample) # observed samples
 tr_samples <- rbinom(num_sample, size = 2, prob = 1/5) # true lables
 
-dice_rolls <- sample(2, num_sample, replace = T, prob = c(2,1)/3) # 1 is green and 2 is red
+dice_rolls <- sample(c(1,0), num_sample, replace = T, prob = c(2,1)/3) # 1 is green and 2 is red
 
 
 # 1 a subject rolls a die 
@@ -15,13 +15,15 @@ dice_rolls <- sample(2, num_sample, replace = T, prob = c(2,1)/3) # 1 is green a
 # 3 die outcomes a red, says yes
 
 for(i in 1:num_sample) {
-  if(dice_rolls[i] == 1) {
-    if(tr_samples[i] == 1) {
+  if(tr_samples[i] == 1) {
+    if(dice_rolls[i] == 1) {
       ob_samples[i] <- 1
     }
   }
   else {
-    ob_samples[i] <- 1
+    if(dice_rolls[i] == 0) {
+      ob_samples[i] <- 1
+    }
   }
 }
 
